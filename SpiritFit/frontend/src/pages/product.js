@@ -1,85 +1,125 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../redux/action.js";
+// pages/Product/Product.js
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import './Product.css';
 
-const LandingPage = () => {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
+const Product = () => {
+  const { id } = useParams();
+  const [selectedSize, setSelectedSize] = useState('');
+  const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+  // In a real app, you would fetch this data based on the ID
+  const product = {
+    id: 1,
+    name: 'Graphic Print T-Shirt',
+    brand: 'Urban Monkey',
+    price: 34.99,
+    originalPrice: 49.99,
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    details: '100% Cotton. Machine wash cold. Imported.',
+    images: [
+      '/images/products/tshirt-1.jpg',
+      '/images/products/tshirt-2.jpg',
+      '/images/products/tshirt-3.jpg'
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: ['Black', 'White', 'Red'],
+    category: 'clothing'
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+    // Add to cart logic
+    console.log(`Added ${quantity} ${product.name} (Size: ${selectedSize}) to cart`);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Hero Section */}
-      <header className="relative w-full h-[500px] bg-cover bg-center" style={{ backgroundImage: "url('/hero-image.jpg')" }}>
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white text-center">
-          <h1 className="text-4xl font-bold">Streetwear for the Bold</h1>
-          <p className="mt-4 text-lg">Explore the latest trends and make a statement</p>
-          <button className="mt-6 px-6 py-2 bg-yellow-400 text-black font-semibold rounded-lg">Shop Now</button>
-        </div>
-      </header>
-
-      {/* Featured Products */}
-      <section className="py-12 px-6">
-        <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {products.slice(0, 3).map((product) => (
-            <div key={product._id} className="bg-white p-4 shadow-md rounded-lg">
-              <img src={product.images[0]} alt={product.name} className="w-full h-60 object-cover rounded-md" />
-              <h3 className="mt-4 text-xl font-semibold">{product.name}</h3>
-              <p className="text-gray-600">₹{product.price}</p>
-              <button className="mt-4 w-full bg-black text-white py-2 rounded-lg">Add to Cart</button>
+    <div className="product-page section-padding">
+      <div className="container">
+        <div className="product-container">
+          <div className="product-gallery">
+            <div className="main-image">
+              <img src={product.images[0]} alt={product.name} />
             </div>
-          ))}
-        </div>
-      </section>
+            <div className="thumbnail-images">
+              {product.images.map((image, index) => (
+                <div key={index} className="thumbnail">
+                  <img src={image} alt={`${product.name} ${index + 1}`} />
+                </div>
+              ))}
+            </div>
+          </div>
 
-      {/* New Arrivals */}
-      <section className="py-12 px-6">
-        <h2 className="text-3xl font-bold text-center mb-8">New Arrivals</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div key={product._id} className="bg-white p-4 shadow-md rounded-lg">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-60 object-cover rounded-md"
-              />
-              <h3 className="mt-4 text-lg font-semibold">{product.name}</h3>
-              <p className="text-gray-600">Rs. {product.price}</p>
-              <div className="flex justify-between items-center mt-4">
-                <button className="bg-black text-white py-2 px-4 rounded-lg">
-                  Add to Cart
-                </button>
-                <button className="text-gray-500 hover:text-black">
-                  <i className="fas fa-heart"></i>
-                </button>
+          <div className="product-details">
+            <h1 className="product-title">{product.name}</h1>
+            <p className="product-brand">{product.brand}</p>
+            
+            <div className="product-price">
+              {product.originalPrice && (
+                <span className="original-price">£{product.originalPrice}</span>
+              )}
+              <span className="current-price">£{product.price}</span>
+              {product.originalPrice && (
+                <span className="discount">
+                  {Math.round((1 - product.price / product.originalPrice) * 100)}% OFF
+                </span>
+              )}
+            </div>
+
+            <div className="product-description">
+              <p>{product.description}</p>
+            </div>
+
+            <div className="product-options">
+              <div className="size-selector">
+                <h3>Size</h3>
+                <div className="size-options">
+                  {product.sizes.map(size => (
+                    <button
+                      key={size}
+                      className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                      onClick={() => setSelectedSize(size)}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="quantity-selector">
+                <h3>Quantity</h3>
+                <div className="quantity-controls">
+                  <button 
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    disabled={quantity <= 1}
+                  >
+                    -
+                  </button>
+                  <span>{quantity}</span>
+                  <button onClick={() => setQuantity(quantity + 1)}>+</button>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* Categories */}
-      <section className="py-12 px-6 bg-gray-200">
-        <h2 className="text-3xl font-bold text-center mb-8">Shop by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {['Caps', 'T-Shirts', 'Hoodies', 'Accessories'].map((category, index) => (
-            <div key={index} className="relative bg-black text-white text-center py-16 rounded-lg cursor-pointer">
-              <h3 className="text-2xl font-semibold">{category}</h3>
+            <button 
+              className="btn btn-primary add-to-cart-btn"
+              onClick={handleAddToCart}
+            >
+              Add to Cart
+            </button>
+
+            <div className="product-meta">
+              <h3>Details</h3>
+              <p>{product.details}</p>
             </div>
-          ))}
+          </div>
         </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-6 bg-black text-white text-center mt-12">
-        <p>&copy; 2025 SpiritFit. All rights reserved.</p>
-      </footer>
+      </div>
     </div>
   );
 };
 
-export default LandingPage;
+export default Product;

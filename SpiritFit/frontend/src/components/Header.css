@@ -1,0 +1,139 @@
+/* components/Header/Header.css */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--secondary);
+  }
+  
+  .top-bar {
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 10px 0;
+    font-size: 12px;
+    text-align: center;
+  }
+  
+  .main-header {
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  
+  .main-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+  }
+  
+  .main-nav a {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+  }
+  
+  .main-nav a:hover {
+    color: var(--accent);
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .cart-btn {
+    position: relative;
+  }
+  
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--accent);
+    color: var(--secondary);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+  
+  .search-bar {
+    position: absolute;
+    width: 100%;
+    background-color: var(--secondary);
+    border-bottom: 1px solid var(--border);
+    padding: 15px 0;
+    z-index: 999;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-container input {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .close-search {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Mobile Styles */
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 992px) {
+    .mobile-menu-btn {
+      display: block;
+    }
+  
+    .main-nav {
+      position: fixed;
+      top: 105px;
+      left: 0;
+      width: 100%;
+      background-color: var(--secondary);
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      transform: translateY(-150%);
+      transition: transform 0.3s ease;
+    }
+  
+    .main-nav.open {
+      transform: translateY(0);
+    }
+  
+    .main-nav ul {
+      flex-direction: column;
+      gap: 15px;
+    }
+  }

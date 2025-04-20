@@ -1,0 +1,46 @@
+/* components/Newsletter/Newsletter.css */
+.newsletter {
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 60px 0;
+  }
+  
+  .newsletter-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .newsletter h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .newsletter p {
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
+  
+  .newsletter-form {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .newsletter-form input {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    font-size: 16px;
+  }
+  
+  .newsletter-form button {
+    padding: 12px 30px;
+  }
+  
+  @media (max-width: 576px) {
+    .newsletter-form {
+      flex-direction: column;
+    }
+  }
